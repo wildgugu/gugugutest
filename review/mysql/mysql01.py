@@ -13,3 +13,7 @@ mycursor.execute("SHOW TABLES")
 all_tables = [table[0] for table in mycursor.fetchall()]
 for table_name in all_tables:
     print(table_name)
+mycursor.execute("select * from sys_user")
+all_tables = [table for table in mycursor.fetchall()]
+for table_name in all_tables:
+    print(table_name)
