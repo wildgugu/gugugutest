@@ -1,19 +1,26 @@
-from typing import Iterator
-import pytest
+import json
+from playwright.sync_api import sync_playwright, Playwright, Browser, BrowserContext, Page, expect
+from mysql.connector import pooling, Error, MySQLConnection
 from mysql.connector.cursor import MySQLCursor
 from mysql.connector.pooling import MySQLConnectionPool
-from playwright.sync_api import sync_playwright, Playwright, Browser, BrowserContext, Page, expect
-import mydomain
-from mysql.connector import pooling, Error, MySQLConnection
+from typing import Iterator, Dict
+import mydomain,pytest
 
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    # 执行所有其他钩子，获取测试报告
+    outcome = yield
+    rep = outcome.get_result()
+    # 把测试结果挂载到 request.node 上
+    # rep.when 有三个阶段：setup(前置)、call(测试用例本身)、teardown(后置)
+    setattr(item, f"rep_{rep.when}", rep)
 
 class LoginPage:
     def __init__(self,page:Page):
-        self.page=page
+        self.page:Page=page
         self.username=page.get_by_placeholder("账号")
         self.password=page.get_by_placeholder("密码")
-        self.input_yzm=page.get_by_placeholder("验证码")
-        self.click_yzm=page.locator('//img[@class="login-code-img"]')
         self.remember=page.get_by_text("记住密码")
         self.login_button=page.get_by_role("button",name="登 录")
         self.alert=page.get_by_role("alert")
@@ -42,14 +49,14 @@ class LoginPage:
 
 class UserManager:
     def __init__(self,page:Page):
-        self.page=page
+        self.page:Page=page
         self.add_user=page.locator('.mb8.el-row').get_by_role("button",name="新增")
         self.edit_user=page.locator('.mb8.el-row').get_by_role("button",name="修改")
         self.delete_user=page.locator('.mb8.el-row').get_by_role("button",name="删除")
         self.top_right_ry=page.get_by_role("button", name="若依")
     class AddUser:
         def __init__(self,page:Page):
-            self.page=page
+            self.page:Page=page
             self.page.get_by_role("dialog", name="添加用户").wait_for()
             self.dialog=self.page.get_by_role("dialog",name="添加用户")
             self.user_nickname=self.dialog.get_by_placeholder("用户昵称")
@@ -63,7 +70,7 @@ class UserManager:
             self.note=self.dialog.get_by_placeholder("输入内容")
             self.career=self.dialog.get_by_placeholder("角色")
             self.normal=self.dialog.get_by_role("radio",name="正常")
-            self.stop=self.dialog.get_by_role("radio",name="停用")
+            self.byno=self.dialog.get_by_role("radio",name="停用")
             self.confirm=self.dialog.get_by_role("button",name="确 定")
             self.cancel=self.dialog.get_by_role("button",name="取 消")
         def add_user_nickname(self,username:str=None):
@@ -113,11 +120,11 @@ class UserManager:
                 self.career.click()
                 self.page.get_by_text(career).click()
                 self.page.locator(".el-select__caret.el-input__icon.el-icon-arrow-up.is-reverse").click()
-        def stauts(self,status=True):
+        def stop(self,status=False):
             if status:
-                self.normal.check()
+                self.byno.check()
             else:
-                self.stop.check()
+                self.normal.check()
         def confirm_click(self):
             self.confirm.click()
         def cancel_click(self):
@@ -132,7 +139,7 @@ class UserManager:
 
     class EditUser:
         def __init__(self,page:Page):
-            self.page = page
+            self.page:Page = page
             self.page.get_by_role("dialog", name="修改用户").wait_for()
             self.dialog = self.page.get_by_role("dialog", name="修改用户")
             self.user_nickname = self.dialog.get_by_placeholder("用户昵称")
@@ -144,7 +151,7 @@ class UserManager:
             self.note = self.dialog.get_by_placeholder("输入内容")
             self.career = self.dialog.get_by_placeholder("角色")
             self.normal = self.dialog.get_by_role("radio", name="正常")
-            self.stop = self.dialog.get_by_role("radio", name="停用")
+            self.byno = self.dialog.get_by_role("radio", name="停用")
             self.confirm = self.dialog.get_by_role("button", name="确 定")
             self.cancel = self.dialog.get_by_role("button", name="取 消")
         def add_user_nickname(self,username:str=None):
@@ -188,19 +195,19 @@ class UserManager:
                 self.career.click()
                 self.page.get_by_text(career).click()
                 self.page.locator(".el-select__caret.el-input__icon.el-icon-arrow-up.is-reverse").click()
-        def stauts(self,status=True):
+        def stop(self,status=True):
             if status:
-                self.normal.check()
+                self.byno.check()
             else:
-                self.stop.check()
+                self.normal.check()
         def confirm_click(self):
             self.confirm.click()
         def cancel_click(self):
             self.cancel.click()
     class DeleteUser:
         def __init__(self,page:Page):
-            self.page = page
-            self.my_dialog=login_page.get_by_role("dialog", name="系统提示")
+            self.page:Page = page
+            self.my_dialog=self.page.get_by_role("dialog", name="系统提示")
             self.info=self.my_dialog.locator('.el-message-box__message')
             self.confirm=self.my_dialog.get_by_role("button", name="确定")
             self.cancel=self.my_dialog.get_by_role("button", name="取消")
@@ -213,16 +220,16 @@ class UserManager:
 
 
 
-    def click_adduser(self):
+    def click_adduser(self)->AddUser:
         self.add_user.click()
         return self.AddUser(self.page)
     def select_user(self,username:str=None):
         if username is not None:
-            username_cell = login_page.get_by_text(username, exact=True)
+            username_cell = self.page.get_by_text(username, exact=True)
             user_row = username_cell.locator("xpath=ancestor::tr[contains(@class, 'el-table__row')]")
             checkbox_span = user_row.locator(".el-table-column--selection .el-checkbox__inner")
             checkbox_span.click()
-    def click_edit_user(self):
+    def click_edit_user(self)->EditUser:
         self.edit_user.click()
         return self.EditUser(self.page)
     def hover_ry(self):
@@ -231,10 +238,14 @@ class UserManager:
         self.top_right_ry.hover()
         self.page.locator('.el-dropdown-menu__item.el-dropdown-menu__item--divided').click()
         self.page.get_by_role("button",name="确定").click()
-
-    def click_delete_user(self):
+    def get_simple_assert(self,dy:str):
+        message=self.page.get_by_text(dy)
+        expect(message).to_be_visible()
+    def click_delete_user(self)->DeleteUser:
         self.delete_user.click()
         return self.DeleteUser(self.page)
+    def shua_xin(self):
+        self.page.reload()
 
 @pytest.fixture(scope="session")
 def new_play_driver():
@@ -243,7 +254,7 @@ def new_play_driver():
 
 @pytest.fixture(scope="session")
 def new_chrome(new_play_driver:Playwright):
-    my_chrome=new_play_driver.chromium.launch(headless=False)
+    my_chrome=new_play_driver.chromium.launch()
     yield my_chrome
     my_chrome.close()
 
@@ -265,10 +276,22 @@ def user_manage_page(chrome_context:BrowserContext)->Iterator[Page]:
     user_manage_page.goto(f"http://{mydomain.domain}/system/user")
     my_login=LoginPage(user_manage_page)
     my_login.login("admin","admin123")
-    my_login.loginclick()
+    my_login.login_click()
     yield user_manage_page
     user_manage_page.close()
 
+@pytest.fixture
+def my_traces(chrome_context:BrowserContext,request: pytest.FixtureRequest):
+    chrome_context.tracing.start(snapshots=True,sources=True,screenshots=True) # 记录DOM快照# 记录源代码# 记录每个步骤的截图
+    yield
+   #测试执行后：判断是否失败，失败才保存追踪
+    if hasattr(request.node, "rep_call") and request.node.rep_call.failed:
+        test_name = request.node.name
+        trace_path = f"mytraces/{test_name}.zip"
+        # 保存追踪文件
+        chrome_context.tracing.stop(path=trace_path)
+    else:
+        chrome_context.tracing.stop()
 @pytest.fixture(scope="session")
 def db_pool():
     pool = pooling.MySQLConnectionPool(
@@ -285,7 +308,7 @@ def db_pool():
     yield pool
     #自动关闭连接池
 
-@pytest.fixture(scope="function")
+@pytest.fixture
 def db_cursor(db_pool:MySQLConnectionPool)->Iterator[tuple[MySQLCursor, MySQLConnection]]:
     conn:MySQLConnection|None = None
     cursor:MySQLCursor|None = None
@@ -304,17 +327,28 @@ def db_cursor(db_pool:MySQLConnectionPool)->Iterator[tuple[MySQLCursor, MySQLCon
         if conn:
             conn.close()
 
-@pytest.fixture(scope="function")
-def make_a_man(db_cursor)-> Iterator[list]:
+@pytest.fixture
+def make_a_man(db_cursor,request: pytest.FixtureRequest)->Iterator[tuple[MySQLCursor,int]]:
     my_cursor,my_conn=db_cursor
-    data=["ptr123","普通人123"]
-    my_cursor.execute("insert into sys_user(user_id,user_name,nick_name) values (DEFAULT,%s,%s)",data)
-    my_conn.commit()
-    new_data = data.copy()
-    new_data.append(my_cursor.lastrowid)
-    yield new_data
-    my_cursor.execute("select user_id,user_name,nick_name from sys_user where user_name=%s And nick_name=%s",data)
-    list=my_cursor.fetchall()
-    if len(list)>0:
-        my_cursor.execute("delete from sys_user where user_name=%s And nick_name=%s",data)
+    str = request.getfixturevalue("my_input")
+    data: Dict[str] = json.loads(str)
+    if data.get("zh") and data.get("nickname"):
+        my_cursor.execute("insert into sys_user(user_id,user_name,nick_name) values (DEFAULT,%s,%s)",(data.get("zh"),data.get("nickname")))
         my_conn.commit()
+        uid=my_cursor.lastrowid
+    yield my_cursor,uid
+    if data.get("zh"):
+        my_cursor.execute("delete from sys_user where user_id=%s and user_name=%s",
+                          (uid, data.get("zh")))
+        my_conn.commit()
+
+@pytest.fixture
+def select_a_man(db_cursor,request: pytest.FixtureRequest)->Iterator[MySQLCursor]:
+    my_cursor,my_conn=db_cursor
+    str = request.getfixturevalue("my_input")
+    data: Dict[str] = json.loads(str)
+    yield my_cursor
+    if data.get("zh") and data.get("nickname"):
+            my_cursor.execute("delete from sys_user where user_name=%s And nick_name=%s",(data.get("zh"),data.get("nickname")))
+            my_conn.commit()
+
