@@ -1,0 +1,8 @@
+pytest==9.0.2
+allure-pytest==2.15.3
+playwright==1.58.0
+allure-python-commons==2.15.3
+PyYAML==6.0.3
+mysql-connector==2.2.9
+mysql-connector-python==9.6.0
+requests==2.33.1.0

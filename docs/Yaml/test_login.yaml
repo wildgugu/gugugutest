@@ -1,0 +1,771 @@
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-001
+  autoid: login_auto_api_001
+  testcase: 所有数据都填写，填写正确账号密码，code，uuid任意值
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-002
+  autoid: login_auto_api_002
+  testcase: 请求方法非法
+  request:
+    method: test
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+      "username": "admin"
+      "password": "admin123"
+      "code": "stri种ng"
+      "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "请求访问：/error，认证失败，无法访问系统资源"
+    "code": 401
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-003
+  autoid: login_auto_api_003
+  testcase: url写错字母
+  request:
+    method: POST
+    url: "http://example.wildgugugu.cn:8080/logina"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+      "username": "admin"
+      "password": "admin123"
+      "code": "stri种ng"
+      "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "请求访问：/logina，认证失败，无法访问系统资源"
+    "code": 401
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-004
+  autoid: login_auto_api_004
+  testcase: 请求方法其他方法
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "Request method 'GET' is not supported"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-005
+  autoid: login_auto_api_005
+  testcase: url参数拼接
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login?a=123"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-006
+  autoid: login_auto_api_006
+  testcase: 请求格式不写json
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/xml"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "Content-Type 'application/xml;charset=UTF-8' is not supported"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-008
+  autoid: login_auto_api_007
+  testcase: 请求头多写头
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+      "sad": "dasd"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-009
+  autoid: login_auto_api_008
+  testcase: 请求头的host为任意值
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+      "Host": "21"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-011
+  autoid: login_auto_api_009
+  testcase: 请求头不写Content-Type
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+    params:
+    raw: ' "username": "admin" "password": "admin123""code": "stri种ng" "uuid": "strinAg"'
+    data:
+  assert:
+    "status_code": 200
+    "msg":  "Content-Type 'application/octet-stream' is not supported"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-012
+  autoid: login_auto_api_010
+  testcase: 请求体不合json格式
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw: '{"username": "admin", "password": "admin123","code": "stri种ng","uuid": "strinAg",}'
+    data:
+  assert:
+    "status_code": 200
+    "msg":  "JSON parse error: Unexpected character ('}' (code 125)): was expecting double-quote to start property name"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-013
+  autoid: login_auto_api_011
+  testcase: 请求体传空格
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw: " "
+    data:
+  assert:
+    "status_code": 200
+    "msg": "JSON parse error: No content to map due to end-of-input"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-014
+  autoid: login_auto_api_012
+  testcase: 请求体传空字符串
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw: '""'
+    data:
+  assert:
+    "status_code": 200
+    "msg": "JSON parse error: Cannot coerce empty String (\"\") to `com.ruoyi.common.core.domain.model.LoginBody` value (but could if coercion was enabled using `CoercionConfig`)"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-015
+  autoid: login_auto_api_013
+  testcase: 请求体传空数组
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data: []
+  assert:
+    "status_code": 200
+    "msg": "JSON parse error: Cannot deserialize value of type `com.ruoyi.common.core.domain.model.LoginBody` from Array value (token `JsonToken.START_ARRAY`)"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-016
+  autoid: login_auto_api_014
+  testcase: 请求体传空对象
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw: '{}'
+    data:
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-017
+  autoid: login_auto_api_015
+  testcase: 传中文特殊符号
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw: "中文"
+    data:
+  assert:
+    "status_code": 200
+    "msg": "JSON parse error: Invalid UTF-8 start byte 0xb8"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-018
+  autoid: login_auto_api_016
+  testcase: 不合要求格式
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+        "admin123": 123
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-019
+  autoid: login_auto_api_017
+  testcase: 账号为空
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-020
+  autoid: login_auto_api_018
+  testcase: 密码为空
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-021
+  autoid: login_auto_api_019
+  testcase: code为空
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-022
+  autoid: login_auto_api_020
+  testcase: uuid为空
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin123"
+        "code": "stri种ng"
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-023
+  autoid: login_auto_api_021
+  testcase: 请求体不写
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "Required request body is missing: public com.ruoyi.common.core.domain.AjaxResult com.ruoyi.web.controller.system.SysLoginController.login(com.ruoyi.common.core.domain.model.LoginBody)"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-024
+  autoid: login_auto_api_022
+  testcase: 账号为""
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": ""
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-025
+  autoid: login_auto_api_023
+  testcase: 密码为""
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": ""
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-026
+  autoid: login_auto_api_024
+  testcase: 账号为" "
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": " "
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg":  "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-027
+  autoid: login_auto_api_025
+  testcase: 密码为" "
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": " "
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-028
+  autoid: login_auto_api_026
+  testcase: 账号中有空格
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "ad min"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-029
+  autoid: login_auto_api_027
+  testcase: 密码中有空格
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin 123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-030
+  autoid: login_auto_api_028
+  testcase: 账号中间包含中文特殊符号
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "ad啊min"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-031
+  autoid: login_auto_api_029
+  testcase: 密码中间包含中文特殊符号
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin啊in123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-032
+  autoid: login_auto_api_030
+  testcase: 账号左右账号有空格
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin "
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-033
+  autoid: login_auto_api_031
+  testcase: 密码左右有空格
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": " admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-034
+  autoid: login_auto_api_032
+  testcase: 密码未区分大小写
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "Admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-035
+  autoid: login_auto_api_033
+  testcase: 账号密码不正确
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "admin"
+        "password": "admin12"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "用户不存在/密码错误"
+    "code": 500
+-
+  module: 登录
+  api: /login
+  status: normal
+  caseid: login-api-036
+  autoid: login_auto_api_034
+  testcase: 账号不区分大小写
+  request:
+    method: post
+    url: "http://example.wildgugugu.cn:8080/login"
+    headers:
+      "Content-Type": "application/json"
+    params:
+    raw:
+    data:
+        "username": "Admin"
+        "password": "admin123"
+        "code": "stri种ng"
+        "uuid": "strinAg"
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200

@@ -1,0 +1,189 @@
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-001
+  autoid: select_auto_api_001
+  testcase: 有token，人存在
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/1"
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-002
+  autoid: select_auto_api_002
+  testcase: 无token
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/1"
+    headers:
+      "Authorization":
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "请求访问：/system/user/1，认证失败，无法访问系统资源"
+    "code": 401
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-003
+  autoid: select_auto_api_003
+  testcase: 指定id为0
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/0"
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "Cannot invoke \"com.ruoyi.common.core.domain.entity.SysUser.getRoles()\" because \"sysUser\" is null"
+    "code": 500
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-004
+  autoid: select_auto_api_004
+  testcase: 指定id为负数
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/-1 "
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "Cannot invoke \"com.ruoyi.common.core.domain.entity.SysUser.getRoles()\" because \"sysUser\" is null"
+    "code": 500
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-005
+  autoid: select_auto_api_005
+  testcase: url写错字母
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/1asd"
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "请求参数类型不匹配，参数[userId]要求类型为：'java.lang.Long'，但输入值为：'1asd'"
+    "code": 500
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-006
+  autoid: select_auto_api_006
+  testcase: url前写错字母
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/usor/1"
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "No static resource system/usor/1 for request '/system/usor/1'."
+    "code": 500
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-007
+  autoid: select_auto_api_007
+  testcase: url拼接参数
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/1?a=12"
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-008
+  autoid: select_auto_api_008
+  testcase: url有中文特殊符号
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/中"
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg": "请求参数类型不匹配，参数[userId]要求类型为：'java.lang.Long'，但输入值为：'中'"
+    "code": 500
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-009
+  autoid: select_auto_api_009
+  testcase: body有内容
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/1"
+    headers:
+      "Authorization": "value"
+    params:
+    raw: "test"
+    data:
+  assert:
+    "status_code": 200
+    "msg": "操作成功"
+    "code": 200
+
+-
+  module: 用户管理
+  api: /system/user
+  caseid: select-api-010
+  autoid: select_auto_api_010
+  testcase: 查询的不存在
+  request:
+    method: get
+    url: "http://example.wildgugugu.cn:8080/system/user/1000"
+    headers:
+      "Authorization": "value"
+    params:
+    raw:
+    data:
+  assert:
+    "status_code": 200
+    "msg":  "Cannot invoke \"com.ruoyi.common.core.domain.entity.SysUser.getRoles()\" because \"sysUser\" is null"
+    "code": 500

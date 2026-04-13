@@ -1,5 +1,5 @@
 import mysql.connector
-import mydomain
+from setting import mydomain
 
 mydb = mysql.connector.connect(
     host=f"{mydomain.domain}",  # 数据库主机地址

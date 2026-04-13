@@ -23,7 +23,7 @@ Thumbs.db
 
 # 日志文件
 *.log
-/mydomain.py
 /print.py
 
-/web/cache/
+/testCases/web/cache/
+/temps/
