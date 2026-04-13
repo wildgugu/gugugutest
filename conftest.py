@@ -40,13 +40,13 @@ def chrome_context(new_chrome:Browser)->Iterator[BrowserContext]:
 @pytest.fixture
 def login_page(chrome_context:BrowserContext)->Iterator[Page]:
     login_page=chrome_context.new_page()
-    login_page.goto(f"http://{mydomain.domain}/login")
+    login_page.goto(f"http://{mydomain.net_workname}/login")
     yield login_page
     login_page.close()
 @pytest.fixture
 def user_manage_page(chrome_context:BrowserContext)->Iterator[Page]:
     user_manage_page=chrome_context.new_page()
-    user_manage_page.goto(f"http://{mydomain.domain}/system/user")
+    user_manage_page.goto(f"http://{mydomain.net_workname}/system/user")
     my_login=LoginPage(user_manage_page)
     my_login.login("admin","admin123")
     my_login.login_click()

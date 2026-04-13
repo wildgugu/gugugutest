@@ -94,7 +94,7 @@ def test_login05(new_chrome,chrome_context,login_page,my_input,aid):
     chrome_context.close()
     my_context=new_chrome.new_context(storage_state='testCases/web/cache/auth.json')
     again_page=my_context.new_page()
-    again_page.goto(f"http://{mydomain.domain}")
+    again_page.goto(f"http://{mydomain.net_workname}")
     with allure.step("断言"):
         UserManager(again_page).get_simple_assert("若依后台管理框架")
 
@@ -177,7 +177,7 @@ def test_login10(chrome_context,my_traces,login_page,my_input,aid):
     my_login_page.login_click()
     my_login_page.page.wait_for_load_state('networkidle')
     np=chrome_context.new_page()
-    np.goto(f"http://{mydomain.domain}/login")
+    np.goto(f"http://{mydomain.net_workname}/login")
     UserManager(np).exit_ry()
     LoginPage(np).shua_xin()
     my_login_page.shua_xin()
