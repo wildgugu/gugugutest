@@ -139,5 +139,5 @@ def create_session():
 
 @pytest.fixture
 def have_token():
-    res=requests.post(url="http://example.wildgugugu.cn:8080/login",headers={ "Content-Type": "application/json"},json={ "username": "admin"  , "password": "admin123"})
+    res=requests.post(url=f"http://{mydomain.domain}:8080/login",headers={ "Content-Type": "application/json"},json={ "username": "admin"  , "password": "admin123"})
     yield res.json().get('token')
