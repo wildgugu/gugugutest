@@ -7,7 +7,7 @@
   testcase: 所有数据都填写，填写正确账号密码，code，uuid任意值
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -31,7 +31,7 @@
   testcase: 请求方法非法
   request:
     method: test
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -55,7 +55,7 @@
   testcase: url写错字母
   request:
     method: POST
-    url: "http://example.wildgugugu.cn:8080/logina"
+    url: "http://172.18.0.1:8080/logina"
     headers:
       "Content-Type": "application/json"
     params:
@@ -79,7 +79,7 @@
   testcase: 请求方法其他方法
   request:
     method: get
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -103,7 +103,7 @@
   testcase: url参数拼接
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login?a=123"
+    url: "http://172.18.0.1:8080/login?a=123"
     headers:
       "Content-Type": "application/json"
     params:
@@ -127,7 +127,7 @@
   testcase: 请求格式不写json
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/xml"
     params:
@@ -151,7 +151,7 @@
   testcase: 请求头多写头
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
       "sad": "dasd"
@@ -176,7 +176,7 @@
   testcase: 请求头的host为任意值
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
       "Host": "21"
@@ -201,7 +201,7 @@
   testcase: 请求头不写Content-Type
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
     params:
     raw: ' "username": "admin" "password": "admin123""code": "stri种ng" "uuid": "strinAg"'
@@ -220,7 +220,7 @@
   testcase: 请求体不合json格式
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -240,7 +240,7 @@
   testcase: 请求体传空格
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -260,7 +260,7 @@
   testcase: 请求体传空字符串
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -280,7 +280,7 @@
   testcase: 请求体传空数组
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -300,7 +300,7 @@
   testcase: 请求体传空对象
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -320,7 +320,7 @@
   testcase: 传中文特殊符号
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -340,7 +340,7 @@
   testcase: 不合要求格式
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -365,7 +365,7 @@
   testcase: 账号为空
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -388,7 +388,7 @@
   testcase: 密码为空
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -411,7 +411,7 @@
   testcase: code为空
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -434,7 +434,7 @@
   testcase: uuid为空
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -457,7 +457,7 @@
   testcase: 请求体不写
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -477,7 +477,7 @@
   testcase: 账号为""
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -501,7 +501,7 @@
   testcase: 密码为""
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -525,7 +525,7 @@
   testcase: 账号为" "
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -548,7 +548,7 @@
   testcase: 密码为" "
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -571,7 +571,7 @@
   testcase: 账号中有空格
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -594,7 +594,7 @@
   testcase: 密码中有空格
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -617,7 +617,7 @@
   testcase: 账号中间包含中文特殊符号
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -640,7 +640,7 @@
   testcase: 密码中间包含中文特殊符号
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -663,7 +663,7 @@
   testcase: 账号左右账号有空格
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -686,7 +686,7 @@
   testcase: 密码左右有空格
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -709,7 +709,7 @@
   testcase: 密码未区分大小写
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -732,7 +732,7 @@
   testcase: 账号密码不正确
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
@@ -755,7 +755,7 @@
   testcase: 账号不区分大小写
   request:
     method: post
-    url: "http://example.wildgugugu.cn:8080/login"
+    url: "http://172.18.0.1:8080/login"
     headers:
       "Content-Type": "application/json"
     params:
