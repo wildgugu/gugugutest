@@ -6,7 +6,7 @@
 
 - **技术选型**：Python + Playwright + Requests + Pytest + Allure + Jenkins + JMeter + MySQL
 - **工程化**：接口封装 YAML 驱动的数据分离，编写自动化用例时间缩短 50%。
-- **报告系统**：集成 Allure + Jenkins邮件通知，问题定位时间缩短。
+- **报告系统**：集成 Allure，问题定位时间缩短。
 
 ## 技术栈
 
@@ -17,7 +17,7 @@
 - **用例管理**：PyYAML + CSV
 - **数据库**：mysql-connector-python
 - **持续集成**：Jenkins
-- **报告**：Allure + Jenkins邮件通知
+- **报告**：Allure
 
 ## 项目执行情况
 
