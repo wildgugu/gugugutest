@@ -25,5 +25,5 @@ Thumbs.db
 *.log
 /print.py
 
-/testCases/web/cache/
 /temps/
+/testCases/web/cache/auth.json
